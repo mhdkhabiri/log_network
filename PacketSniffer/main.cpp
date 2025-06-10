@@ -1,14 +1,19 @@
 #include "SnifferThread.h"
+#include "ChartWidget.h"
 
 
-int main() {
-    // std::string iface = "eth0"; // Change to your interface, e.g., wlan0
-    std::string iface = "lo"; // For WiFi
+int main(int argc, char* argv[]) {
+    
+    std::string iface = "lo"; 
 
     Packet_sniffer sniffer(iface);
 
     std::thread sniffer_thread(&Packet_sniffer::start_sniffing, &sniffer);
-    sniffer_thread.join(); // In real apps: detach or add signal handlers
+    sniffer_thread.join(); 
+    QApplication app(argc, argv);
+    MainWindow window;
+    window.show();
+    return app.exec();
 
     return 0;
 }
